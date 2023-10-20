@@ -1,5 +1,9 @@
+from dotenv import load_dotenv
 from pathlib import Path
 import redis
+
+# load enviroment variables into os.environ
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,8 +11,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-SECRET_KEY
 SECRET_KEY = "django-insecure-0peo@#x9jur3!h$ryje!$879xww8y1y66jx!%*#ymhg&jkozs2"
 
+# For security reasons, use vulnerable variables from env.
+# SECRET_KEY = os.environ["SECRET_KEY"]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
+
+# For security reasons, use vulnerable variables from env.
+# DEBUG = os.environ["DEBUG"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]

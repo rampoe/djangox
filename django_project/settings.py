@@ -1,4 +1,5 @@
 from pathlib import Path
+import redis
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -93,6 +94,29 @@ DATABASES = {
 #         "PORT": 5432,  # default postgres port
 #     }
 # }
+
+# Redis config
+REDIS_CACHES = {
+    "default": {
+        "HOST": "localhost",
+        "PORT": "6379",
+        "PASSWORD": "",
+        "INDEX": "0",
+        "TIMEOUT": 604800,
+    },
+    # more as needed
+}
+
+# you can refactor by splitting the below code into another file
+# e.g: core/cache.py
+# then you can import by from core.cache import cache
+cache = redis.StrictRedis(
+    host=REDIS_CACHES["default"]["HOST"],
+    port=REDIS_CACHES["default"]["PORT"],
+    password=REDIS_CACHES["default"]["PASSWORD"],
+    decode_responses=True,
+    db=REDIS_CACHES["default"]["INDEX"],
+)
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [

@@ -1,4 +1,9 @@
+from dotenv import load_dotenv
 from pathlib import Path
+import redis
+
+# load enviroment variables into os.environ
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -6,8 +11,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-SECRET_KEY
 SECRET_KEY = "django-insecure-0peo@#x9jur3!h$ryje!$879xww8y1y66jx!%*#ymhg&jkozs2"
 
+# For security reasons, use vulnerable variables from env.
+# SECRET_KEY = os.environ["SECRET_KEY"]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
+
+# For security reasons, use vulnerable variables from env.
+# DEBUG = os.environ["DEBUG"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
@@ -93,6 +104,29 @@ DATABASES = {
 #         "PORT": 5432,  # default postgres port
 #     }
 # }
+
+# Redis config
+REDIS_CACHES = {
+    "default": {
+        "HOST": "localhost",
+        "PORT": "6379",
+        "PASSWORD": "",
+        "INDEX": "0",
+        "TIMEOUT": 604800,
+    },
+    # more as needed
+}
+
+# you can refactor by splitting the below code into another file
+# e.g: core/cache.py
+# then you can import by from core.cache import cache
+cache = redis.StrictRedis(
+    host=REDIS_CACHES["default"]["HOST"],
+    port=REDIS_CACHES["default"]["PORT"],
+    password=REDIS_CACHES["default"]["PASSWORD"],
+    decode_responses=True,
+    db=REDIS_CACHES["default"]["INDEX"],
+)
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [

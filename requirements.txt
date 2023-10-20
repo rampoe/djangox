@@ -24,3 +24,5 @@ sqlparse==0.4.3
 typing_extensions==4.5.0
 urllib3==1.26.14
 whitenoise==6.5.0
+redis==4.5.4
+python-dotenv==1.0.0
